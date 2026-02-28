@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArmaTech — Sovereign Technology. Advanced Systems.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   DESIGN SYSTEM TOKENS
+   ============================================ */
+:root {
+  /* Color Tokens */
+  --color-primary-dark: #1E1E1E;
+  --color-secondary-dark: #3A3A3A;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-accent-yellow: #FFC400;
+  --color-accent-yellow-hover: #FFD340;
+  --color-light-grey: #A0A0A0;
+  --color-border-grey: #2E2E2E;
+  --color-surface-elevated: #242424;
+  --color-surface-card: #1A1A1A;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A0A0A0;
+  --color-text-tertiary: #6B6B6B;
+
+  /* Typography */
+  --font-heading: 'Instrument Sans', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  /* Type Scale */
+  --text-display: clamp(2.5rem, 5vw, 4.25rem);
+  --text-h1: clamp(2rem, 3.5vw, 3rem);
+  --text-h2: clamp(1.5rem, 2.5vw, 2.25rem);
+  --text-h3: clamp(1.125rem, 1.5vw, 1.375rem);
+  --text-h4: 1.125rem;
+  --text-body: 1rem;
+  --text-body-lg: 1.125rem;
+  --text-small: 0.875rem;
+  --text-caption: 0.75rem;
+
+  /* Spacing Scale (8px base) */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.5rem;     /* 24px */
+  --space-6: 2rem;       /* 32px */
+  --space-7: 2.5rem;     /* 40px */
+  --space-8: 3rem;       /* 48px */
+  --space-9: 4rem;       /* 64px */
+  --space-10: 5rem;      /* 80px */
+  --space-11: 6rem;      /* 96px */
+  --space-12: 8rem;      /* 128px */
+
+  /* Layout */
+  --grid-columns: 12;
+  --grid-gutter: 1.5rem;
+  --container-max: 1280px;
+  --container-padding: clamp(1.5rem, 4vw, 3rem);
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,196,0,0.08);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 180ms var(--ease-out);
+  --transition-base: 300ms var(--ease-out);
+  --transition-slow: 500ms var(--ease-out);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: var(--color-black);
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ============================================
+   LAYOUT UTILITIES
+   ============================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gutter);
+}
+
+.section {
+  padding: var(--space-12) 0;
+}
+
+.section--tight {
+  padding: var(--space-10) 0;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-display {
+  font-size: var(--text-display);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.text-label {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-yellow);
+}
+
+.text-body-lg {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn--primary {
+  background: var(--color-accent-yellow);
+  color: var(--color-black);
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-yellow-hover);
+  box-shadow: 0 0 24px rgba(255, 196, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-accent-yellow);
+  color: var(--color-accent-yellow);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-accent-yellow);
+  padding: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.btn--ghost::after {
+  content: '→';
+  transition: transform var(--transition-fast);
+}
+
+.btn--ghost:hover::after {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-5) 0;
+  transition: all var(--transition-base);
+  background: transparent;
+}
+
+.nav--scrolled {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border-grey);
+  padding: var(--space-4) 0;
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__logo {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nav__logo-mark {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent-yellow);
+  border-radius: 1px;
+  display: inline-block;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  list-style: none;
+}
+
+.nav__links a {
+  font-family: var(--font-heading);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.nav__links a:hover {
+  color: var(--color-white);
+}
+
+.nav__cta {
+  font-family: var(--font-heading);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent-yellow);
+  transition: opacity var(--transition-fast);
+}
+
+.nav__cta:hover {
+  opacity: 0.8;
+}
+
+.nav__mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+}
+
+.nav__mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-white);
+  margin: 5px 0;
+  transition: all var(--transition-fast);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Blueprint grid pattern */
+.hero__bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,196,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,196,0,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 70% 50%, rgba(255,196,0,0.04), transparent);
+}
+
+/* Subtle horizontal scan lines */
+.hero__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255,255,255,0.008) 3px,
+    rgba(255,255,255,0.008) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  padding-top: var(--space-12);
+}
+
+.hero__content .grid {
+  align-items: end;
+}
+
+.hero__label {
+  margin-bottom: var(--space-6);
+}
+
+.hero__heading {
+  font-size: var(--text-display);
+  color: var(--color-white);
+  margin-bottom: var(--space-6);
+  max-width: 16ch;
+}
+
+.hero__heading span {
+  color: var(--color-accent-yellow);
+}
+
+.hero__description {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-secondary);
+  max-width: 48ch;
+  margin-bottom: var(--space-8);
+  line-height: 1.7;
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  padding-bottom: var(--space-4);
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.hero__stat-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: -0.02em;
+}
+
+.hero__stat-label {
+  font-size: var(--text-small);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Divider */
+.hero__divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border-grey), transparent);
+}
+
+/* ============================================
+   CORE WORK SECTION
+   ============================================ */
+.core-work {
+  background: var(--color-primary-dark);
+  border-bottom: 1px solid var(--color-border-grey);
+}
+
+.section__header {
+  margin-bottom: var(--space-9);
+}
+
+.section__header h2 {
+  font-size: var(--text-h2);
+  margin-top: var(--space-3);
+}
+
+.core-work__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gutter);
+}
+
+.capability-card {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-grey);
+  border-radius: var(--radius-md);
+  padding: var(--space-7);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.capability-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-accent-yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-base);
+}
+
+.capability-card:hover {
+  border-color: rgba(255, 196, 0, 0.15);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.capability-card:hover::before {
+  transform: scaleX(1);
+}
+
+.capability-card__number {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-5);
+}
+
+.capability-card__icon {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border-grey);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+  color: var(--color-accent-yellow);
+}
+
+.capability-card h3 {
+  font-size: var(--text-h3);
+  margin-bottom: var(--space-4);
+  color: var(--color-white);
+}
+
+.capability-card p {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+/* ============================================
+   FACILITY SECTION
+   ============================================ */
+.facility {
+  background: var(--color-black);
+  position: relative;
+}
+
+.facility__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 560px;
+}
+
+.facility__image {
+  background: var(--color-secondary-dark);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.facility__image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background:
+    linear-gradient(135deg, var(--color-secondary-dark) 0%, #2a2a2a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Geometric placeholder pattern */
+.facility__image-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,196,0,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,196,0,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.facility__image-placeholder::after {
+  content: 'Facility Image';
+  font-family: var(--font-heading);
+  font-size: var(--text-small);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 1;
+}
+
+.facility__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-11);
+  background: var(--color-primary-dark);
+  border: 1px solid var(--color-border-grey);
+  border-left: none;
+}
+
+.facility__content h2 {
+  font-size: var(--text-h2);
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.facility__content p {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-7);
+  max-width: 44ch;
+}
+
+/* ============================================
+   PROJECTS SECTION
+   ============================================ */
+.projects {
+  background: var(--color-primary-dark);
+  border-top: 1px solid var(--color-border-grey);
+}
+
+.projects__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-9);
+}
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gutter);
+}
+
+.project-card {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-grey);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.project-card:hover {
+  border-color: rgba(255,196,0,0.15);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.project-card__image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card__image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255,196,0,0.02) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,196,0,0.02) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,196,0,0.02) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,196,0,0.02) 75%);
+  background-size: 20px 20px;
+}
+
+.project-card__image span {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 1;
+}
+
+.project-card__body {
+  padding: var(--space-5);
+}
+
+.project-card__badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-3);
+}
+
+.badge--prototype {
+  background: rgba(255, 196, 0, 0.12);
+  color: var(--color-accent-yellow);
+  border: 1px solid rgba(255, 196, 0, 0.2);
+}
+
+.badge--validation {
+  background: rgba(100, 200, 255, 0.1);
+  color: #64C8FF;
+  border: 1px solid rgba(100, 200, 255, 0.2);
+}
+
+.badge--preproduction {
+  background: rgba(100, 255, 160, 0.1);
+  color: #64FFA0;
+  border: 1px solid rgba(100, 255, 160, 0.2);
+}
+
+.project-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--space-2);
+}
+
+.project-card__desc {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   RESOURCES SECTION
+   ============================================ */
+.resources {
+  background: var(--color-black);
+  border-top: 1px solid var(--color-border-grey);
+}
+
+.resources__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gutter);
+}
+
+.resource-card {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-grey);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.resource-card:hover {
+  border-color: rgba(255,196,0,0.2);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.resource-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,196,0,0.08);
+  border: 1px solid rgba(255,196,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resource-card__icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-accent-yellow);
+}
+
+.resource-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.resource-card__desc {
+  font-size: var(--text-small);
+  color: var(--color-text-tertiary);
+  line-height: 1.5;
+}
+
+.resource-card__link {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-accent-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: gap var(--transition-fast);
+}
+
+.resource-card:hover .resource-card__link {
+  gap: var(--space-3);
+}
+
+/* ============================================
+   ENQUIRY SECTION
+   ============================================ */
+.enquiry {
+  background: var(--color-primary-dark);
+  border-top: 1px solid var(--color-border-grey);
+}
+
+.enquiry__inner {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-11);
+  align-items: start;
+}
+
+.enquiry__info h2 {
+  font-size: var(--text-h2);
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.enquiry__info p {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-7);
+  max-width: 40ch;
+}
+
+.enquiry__contact-line {
+  font-size: var(--text-small);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-2);
+}
+
+.enquiry__contact-line a {
+  color: var(--color-accent-yellow);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form__label {
+  font-family: var(--font-heading);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.form__input,
+.form__textarea {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-white);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-grey);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  transition: border-color var(--transition-fast);
+  outline: none;
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  border-color: var(--color-accent-yellow);
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  background: var(--color-black);
+  border-top: 1px solid var(--color-border-grey);
+  padding: var(--space-10) 0 var(--space-7);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-9);
+  margin-bottom: var(--space-10);
+}
+
+.footer__brand p {
+  font-size: var(--text-small);
+  color: var(--color-text-tertiary);
+  line-height: 1.65;
+  max-width: 32ch;
+  margin-top: var(--space-4);
+}
+
+.footer__col-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-5);
+}
+
+.footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.footer__links a {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.footer__links a:hover {
+  color: var(--color-white);
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-border-grey);
+}
+
+.footer__bottom p {
+  font-size: var(--text-small);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.animate-in.visible {
+  animation: fadeUp 0.7s var(--ease-out) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* ============================================
+   RESPONSIVE: TABLET
+   ============================================ */
+@media (max-width: 1024px) {
+  .core-work__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .facility__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .facility__image-placeholder {
+    min-height: 300px;
+  }
+
+  .facility__content {
+    padding: var(--space-9);
+    border-left: 1px solid var(--color-border-grey);
+  }
+
+  .projects__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .resources__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .enquiry__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
+  }
+
+  .hero__content .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__meta {
+    flex-direction: row;
+    gap: var(--space-8);
+    padding-top: var(--space-7);
+    padding-bottom: 0;
+    border-top: 1px solid var(--color-border-grey);
+  }
+}
+
+/* ============================================
+   RESPONSIVE: MOBILE
+   ============================================ */
+@media (max-width: 640px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__mobile-toggle {
+    display: block;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: var(--space-12) 0 var(--space-10);
+  }
+
+  .hero__heading {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__meta {
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .resources__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    gap: var(--space-3);
+    text-align: center;
+  }
+
+  .facility__content {
+    padding: var(--space-7);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ========================================
+     NAVIGATION
+     ======================================== -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">
+        <span class="nav__logo-mark"></span>
+        ArmaTech
+      </a>
+      <ul class="nav__links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#facility">Facility</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#enquiry">Contact</a></li>
+      </ul>
+      <a href="#enquiry" class="nav__cta">Work With Us</a>
+      <button class="nav__mobile-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========================================
+     HERO
+     ======================================== -->
+<section class="hero">
+  <div class="hero__bg">
+    <div class="hero__scanlines"></div>
+  </div>
+  <div class="container hero__content">
+    <div class="grid">
+      <div style="grid-column: span 8;">
+        <p class="text-label hero__label animate-in">Advanced R&D · Automation · Robotics</p>
+        <h1 class="hero__heading text-display animate-in delay-1">
+          Sovereign Technology.<br>
+          Advanced Systems.<br>
+          <span>Applied R&D.</span>
+        </h1>
+        <p class="hero__description animate-in delay-2">
+          We design, prototype and commercialise advanced robotic and automated systems for defence and industrial markets.
+        </p>
+        <div class="hero__actions animate-in delay-3">
+          <a href="#enquiry" class="btn btn--primary">Work With Us</a>
+          <a href="#services" class="btn btn--secondary">View Capability</a>
+        </div>
+      </div>
+      <div style="grid-column: span 4;">
+        <div class="hero__meta animate-in delay-3">
+          <div class="hero__stat">
+            <span class="hero__stat-value">4</span>
+            <span class="hero__stat-label">Active Programs</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">R&D</span>
+            <span class="hero__stat-label">Stage Focus</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">AU</span>
+            <span class="hero__stat-label">Sovereign Capability</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__divider"></div>
+</section>
+
+<!-- ========================================
+     CORE WORK
+     ======================================== -->
+<section class="core-work section" id="services">
+  <div class="container">
+    <div class="section__header animate-in">
+      <p class="text-label">What We Do</p>
+      <h2>Core Capability</h2>
+    </div>
+    <div class="core-work__grid">
+
+      <div class="capability-card animate-in delay-1">
+        <span class="capability-card__number">01</span>
+        <div class="capability-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>Contracted R&D &amp; Technical Services</h3>
+        <p>Rapid prototyping, applied research, system integration, and manufacturing brokerage. End-to-end technical delivery from concept to production-ready output.</p>
+      </div>
+
+      <div class="capability-card animate-in delay-2">
+        <span class="capability-card__number">02</span>
+        <div class="capability-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </div>
+        <h3>Internal Deep-Tech Development</h3>
+        <p>Proprietary programs in robotics, counter-measures, and synchronised digital-physical systems. Internally funded IP with commercial and strategic pathways.</p>
+      </div>
+
+      <div class="capability-card animate-in delay-3">
+        <span class="capability-card__number">03</span>
+        <div class="capability-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>Strategic &amp; Automation Consulting</h3>
+        <p>Advanced manufacturing advisory, automation architecture, and perception systems design. Helping enterprises bridge the gap between legacy process and autonomous operation.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     FACILITY
+     ======================================== -->
+<section class="facility section" id="facility">
+  <div class="facility__inner">
+    <div class="facility__image">
+      <div class="facility__image-placeholder"></div>
+    </div>
+    <div class="facility__content">
+      <p class="text-label animate-in">Our Facility</p>
+      <h2 class="animate-in delay-1">The Beginning of Local Production</h2>
+      <p class="animate-in delay-2">
+        A purpose-built innovation hub designed around circular manufacturing principles. Integrating rapid prototyping, materials R&D, and small-batch production under one roof — enabling sovereign capability from first prototype to field deployment.
+      </p>
+      <a href="#" class="btn btn--ghost animate-in delay-3">Explore Our Facility</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     PROJECTS
+     ======================================== -->
+<section class="projects section" id="projects">
+  <div class="container">
+    <div class="projects__header">
+      <div class="section__header" style="margin-bottom: 0;">
+        <p class="text-label animate-in">Active Programs</p>
+        <h2 class="animate-in delay-1">Projects</h2>
+      </div>
+      <a href="#" class="btn btn--ghost animate-in delay-1">View All Projects</a>
+    </div>
+    <div class="projects__grid">
+
+      <div class="project-card animate-in delay-1">
+        <div class="project-card__image"><span>Project Image</span></div>
+        <div class="project-card__body">
+          <span class="project-card__badge badge--prototype">Prototype</span>
+          <h4 class="project-card__title">Autonomous Ground Platform</h4>
+          <p class="project-card__desc">Modular UGV platform for industrial inspection and perimeter surveillance applications.</p>
+        </div>
+      </div>
+
+      <div class="project-card animate-in delay-2">
+        <div class="project-card__image"><span>Project Image</span></div>
+        <div class="project-card__body">
+          <span class="project-card__badge badge--validation">Validation</span>
+          <h4 class="project-card__title">Counter-UAS System</h4>
+          <p class="project-card__desc">Electronic and kinetic counter-measures for small unmanned aerial systems in contested environments.</p>
+        </div>
+      </div>
+
+      <div class="project-card animate-in delay-3">
+        <div class="project-card__image"><span>Project Image</span></div>
+        <div class="project-card__body">
+          <span class="project-card__badge badge--preproduction">Pre-Production</span>
+          <h4 class="project-card__title">Industrial Perception Suite</h4>
+          <p class="project-card__desc">Computer vision and LiDAR sensor fusion for automated quality assurance in manufacturing environments.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     RESOURCES
+     ======================================== -->
+<section class="resources section" id="resources">
+  <div class="container">
+    <div class="section__header animate-in">
+      <p class="text-label">Downloads</p>
+      <h2>Resources</h2>
+    </div>
+    <div class="resources__grid">
+
+      <div class="resource-card animate-in delay-1">
+        <div class="resource-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <h4 class="resource-card__title">Capability Overview</h4>
+        <p class="resource-card__desc">Technical capabilities, service lines and engagement models.</p>
+        <span class="resource-card__link">Download PDF →</span>
+      </div>
+
+      <div class="resource-card animate-in delay-2">
+        <div class="resource-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <h4 class="resource-card__title">Executive Summary</h4>
+        <p class="resource-card__desc">Strategic positioning, market thesis and company trajectory.</p>
+        <span class="resource-card__link">Download PDF →</span>
+      </div>
+
+      <div class="resource-card animate-in delay-3">
+        <div class="resource-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <h4 class="resource-card__title">Business Brief</h4>
+        <p class="resource-card__desc">Operational overview, facility details and team structure.</p>
+        <span class="resource-card__link">Download PDF →</span>
+      </div>
+
+      <div class="resource-card animate-in delay-4">
+        <div class="resource-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <h4 class="resource-card__title">Investor Prospectus</h4>
+        <p class="resource-card__desc">Financial overview, investment thesis and growth roadmap.</p>
+        <span class="resource-card__link">Download PDF →</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     ENQUIRY
+     ======================================== -->
+<section class="enquiry section" id="enquiry">
+  <div class="container">
+    <div class="enquiry__inner">
+      <div class="enquiry__info">
+        <p class="text-label animate-in">Get In Touch</p>
+        <h2 class="animate-in delay-1">Start a Conversation</h2>
+        <p class="animate-in delay-2">
+          Whether you're exploring a technical partnership, investment opportunity, or contracted engagement — we'd like to hear from you.
+        </p>
+        <div class="animate-in delay-3">
+          <p class="enquiry__contact-line">General — <a href="mailto:info@armatech.com.au">info@armatech.com.au</a></p>
+          <p class="enquiry__contact-line">Partnerships — <a href="mailto:partners@armatech.com.au">partners@armatech.com.au</a></p>
+        </div>
+      </div>
+      <form class="form animate-in delay-2">
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label">Business Name</label>
+            <input type="text" class="form__input" placeholder="Your company">
+          </div>
+          <div class="form__group">
+            <label class="form__label">Contact Name</label>
+            <input type="text" class="form__input" placeholder="Full name">
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label">Email</label>
+            <input type="email" class="form__input" placeholder="you@company.com">
+          </div>
+          <div class="form__group">
+            <label class="form__label">Phone</label>
+            <input type="tel" class="form__input" placeholder="+61">
+          </div>
+        </div>
+        <div class="form__group">
+          <label class="form__label">Project Overview</label>
+          <textarea class="form__textarea" placeholder="Brief description of the engagement or opportunity"></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary" style="align-self: flex-start;">Submit Enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     FOOTER
+     ======================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="nav__logo">
+          <span class="nav__logo-mark"></span>
+          ArmaTech
+        </a>
+        <p>Advanced R&D and automation. Designing, prototyping and commercialising sovereign technology for defence and industrial markets.</p>
+      </div>
+      <div>
+        <h5 class="footer__col-title">Company</h5>
+        <ul class="footer__links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Facility</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer__col-title">Capability</h5>
+        <ul class="footer__links">
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer__col-title">Legal</h5>
+        <ul class="footer__links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 ArmaTech Pty Ltd. All rights reserved.</p>
+      <p>Brisbane, Australia</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================
+     SCRIPTS
+     ======================================== -->
+<script>
+// Nav scroll state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('nav--scrolled', window.scrollY > 40);
+});
+
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
